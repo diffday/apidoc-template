@@ -484,6 +484,50 @@ require([
         }
     }
 
+    var groupHtmlHint=false;
+    var groupData={};
+    var groupHeader={};
+
+    //附加了可展开的图标，第一次收缩，准备数据结构，保存所有的方法菜单数据，以group来组织
+    function allHeaderFold() {
+        var allItem = $('#scrollingNav li');
+
+        allItem.each(function() {
+            if ($(this)[0].className.indexOf("nav-header") == -1) {
+                groupName=$(this)[0].dataset.group;
+                if (!groupHtmlHint) {
+                    if (!groupData.hasOwnProperty(groupName)) {
+                        groupData[groupName] = '';
+                    }
+                    groupData[groupName] += $(this)[0].outerHTML;
+                }
+                $(this).remove();
+            } //将组头元素，通过样式选择器，加入数据结构支持快速访问
+            else if (($(this)[0].className === "nav-header") && !groupHtmlHint) {
+                groupHeader[$(this)[0].dataset.group]=$(this);
+            }
+        });
+        groupHtmlHint=true;
+        $('.header-fold').each(function() {
+            $(this).html('-');
+        })
+    }
+
+    //绑定展开事件
+    $('.header-fold').bind('click',function() {
+        if (this.innerHTML == '-') {
+            groupHeader[this.id].after(groupData[this.id]);
+            this.innerHTML = "+"；
+        }
+        else {
+            alert("可用Alt键全局折叠");
+        }
+    })
+
+    $(document).keyup(function(e){
+        if (e.keyCode === 17) allHeaderFold();
+    })
+
     /**
      * Change version of an article to compare it to an other version.
      */

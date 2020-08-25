@@ -54,7 +54,7 @@
         {{#if isFixed}}
           <li class="nav-fixed nav-header" data-group="{{group}}"><a href="#api-{{group}}">{{underscoreToSpace title}}</a></li>
         {{else}}
-          <li class="nav-header" data-group="{{group}}"><a href="#api-{{group}}">{{underscoreToSpace title}}</a></li>
+          <li class="nav-header" data-group="{{group}}"><a href="#api-{{group}}"><span class="header-fold" id="{{group}}" style="cursor:pointer;padding-right:10px;color:green">+</span>{{underscoreToSpace title}}</a></li>
         {{/if}}
       {{else}}
         <li {{#if hidden}}class="hide" {{/if}}data-group="{{group}}" data-name="{{name}}" data-version="{{version}}">
